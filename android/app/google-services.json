@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "663501395901",
+    "project_id": "whatapp-30605",
+    "storage_bucket": "whatapp-30605.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663501395901:android:0e7cf60c1b88b5987364d4",
+        "android_client_info": {
+          "package_name": "com.example.whatapp_cloneap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663501395901-g7p3k4733ih6i0tl8qek5ohemicpstpu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whatapp_cloneap",
+            "certificate_hash": "4855c51ea2d080ecdbd7290c90e578bb31601336"
+          }
+        },
+        {
+          "client_id": "663501395901-1v9ektpjdvtgrhs67ibqpo0v0dsflmfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5XXNJyn4vwsUX6PN-ccJs0pOws7djjoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663501395901-1v9ektpjdvtgrhs67ibqpo0v0dsflmfv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
