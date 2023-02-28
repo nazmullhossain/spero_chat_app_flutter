@@ -21,22 +21,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
   final TextEditingController _messageController = TextEditingController();
 
   bool isShowSendButton = false;
-  // void sendTextMessage()async{
-  //   if (isShowSendButton) {
-  //     ref.read(chatControllerProvider).sendTextMessage(
-  //       context,
-  //       _messageController.text.trim(),
-  //       widget.recieverUserId,
-  //
-  //
-  //     );
-  //
-  //     setState(() {
-  //       _messageController.text = '';
-  //     });
-  //   }
-  // }
-  //
+
 
   void sendTextMessage() async {
     if (isShowSendButton) {
@@ -66,6 +51,17 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 sendFileMesssge(image, MessageEnum.image);
     }
   }
+
+
+
+  void selectVideo()async{
+    File?video=await pickVideoFromGallery(context);
+
+    if(video!=null){
+      sendFileMesssge(video, MessageEnum.video);
+    }
+  }
+
 
   @override
   void dispose() {
@@ -131,7 +127,9 @@ sendFileMesssge(image, MessageEnum.image);
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        selectVideo();
+                      },
                       child: Icon(
                         Icons.attach_file,
                         color: Colors.grey,
