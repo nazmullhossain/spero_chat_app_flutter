@@ -42,9 +42,15 @@ class AuthContorller {
   Future<UserModel?> getUserData() async {
     UserModel? user = await authRepositoryServices.getCurrentUserData();
     return user;
+
   }
 
   Stream<UserModel> userDataById(String userId) {
     return authRepositoryServices.userData(userId);
   }
+void setUserState(bool isOnline)async{
+    authRepositoryServices.setUserState(isOnline);
+}
+
+
 }

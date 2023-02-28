@@ -1,13 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatapp_clone/controller/auth_controller.dart';
 
 import '../pages/select_contact_pages.dart';
 import '../utils/color_utils.dart';
 import '../widgets/contact_list_widget.dart';
 
 
-class MobileLayout extends StatelessWidget {
+class MobileLayout extends ConsumerStatefulWidget {
   const MobileLayout({Key? key}) : super(key: key);
 
+  @override
+  ConsumerState<MobileLayout> createState() => _MobileLayoutState();
+}
+
+class _MobileLayoutState extends ConsumerState<MobileLayout>
+with WidgetsBindingObserver{
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+  
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    switch(state){
+      case AppLifecycleState.resumed:
+        ref.read(authContorllerProvider).setUserState(true);
+        break;
+
+
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.paused:
+        ref.read(authContorllerProvider).setUserState(false);
+        break;
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
