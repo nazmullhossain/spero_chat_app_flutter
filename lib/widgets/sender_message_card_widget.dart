@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:whatapp_clone/enums/message_enum.dart';
+import 'package:whatapp_clone/widgets/dislplay_test_image_widget.dart';
 
 import '../utils/color_utils.dart';
 
@@ -7,10 +9,12 @@ class SenderMessageCardWidget extends StatelessWidget {
   const SenderMessageCardWidget({
     Key? key,
     required this.message,
+    required this.type,
     required this.date,
   }) : super(key: key);
   final String message;
   final String date;
+  final MessageEnum type;
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +32,18 @@ class SenderMessageCardWidget extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
+                padding: type==MessageEnum.text? EdgeInsets.only(
                   left: 10,
                   right: 30,
                   top: 5,
                   bottom: 20,
-                ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                ):EdgeInsets.only(
+                    left: 5,
+                    top: 5,
+                    right: 5,
+                    bottom: 25
+        ),
+                child: DisplayImageWidget(type: type, message: message)
               ),
               Positioned(
                 bottom: 2,

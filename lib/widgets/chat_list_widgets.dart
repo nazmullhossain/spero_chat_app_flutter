@@ -58,13 +58,15 @@ class _ChatListWidgetState extends ConsumerState<ChatListWidget> {
             if (messageData.senderId==FirebaseAuth.instance.currentUser!.uid) {
               return MyMessageCardWidget(
                 message: messageData.text,
-                date: timeSent,);
+                date: timeSent,
+              type: messageData.type,);
 
 
             }
             return SenderMessageCardWidget(
               message: messageData.text,
               date: timeSent,
+              type: messageData.type,
             );
           },
         );
