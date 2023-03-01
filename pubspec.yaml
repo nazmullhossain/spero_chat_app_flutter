@@ -46,6 +46,11 @@ dependencies:
   video_player: ^2.5.2
   cached_video_player: ^2.0.4
   emoji_picker_flutter: ^1.5.2
+  flutter_sound: ^9.2.13
+  permission_handler: ^9.2.0
+  path_provider: ^2.0.13
+  audioplayers: ^3.0.1
+ 
 
 
 

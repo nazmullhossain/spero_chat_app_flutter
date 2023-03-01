@@ -65,4 +65,21 @@ ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessag
     ref: ref,
     messageEnum: messageEnum));
   }
+
+// void sendGIFMessage(
+//     BuildContext context,
+//     String gifUrl,
+//     String recieverUserId
+//     ){
+//     ref.read(userDataAuthProvider)
+//         .whenData((value) => chatRepository.sendGIFMessage(
+//         context: context,
+//         gifUrl: gifUrl,
+//         recieverUserId: recieverUserId,
+//         senderUser: value!));
+// }
+//
+
+
+
 }
