@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatapp_clone/enums/message_enum.dart';
+import 'package:whatapp_clone/provider/message_reply_provider.dart';
 
 import '../models/chat_contact_models.dart';
 import '../models/message_models.dart';
@@ -39,13 +40,15 @@ class ChatController {
     String text,
     String recieverUserId,
   ) {
+    final messageReply=ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData((value) =>
         chatRepository.sendTextMessage(
             context: context,
             text: text,
             recieverUserId: recieverUserId,
+            messageReply:  messageReply,
             senderUser: value!));
-
+    ref.read(messageReplyProvider.notifier).update((state) => null);
     print("chat controler");
 
   }
@@ -57,13 +60,16 @@ class ChatController {
       String reciverUserId,
       MessageEnum messageEnum
       ){
+    final messageReply=ref.read(messageReplyProvider);
 ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessage(
     context: context,
     file: file,
+    messageReply:  messageReply,
     reciverUserId: reciverUserId,
     senderUserData: value!,
     ref: ref,
     messageEnum: messageEnum));
+ref.read(messageReplyProvider.notifier).update((state) => null);
   }
 
 // void sendGIFMessage(

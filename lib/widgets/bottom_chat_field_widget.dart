@@ -11,8 +11,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:whatapp_clone/enums/message_enum.dart';
 import '../controller/chats_controller.dart';
 
+import '../provider/message_reply_provider.dart';
 import '../utils/color_utils.dart';
 import '../utils/utils_utils.dart';
+import 'message_replay_preview_widget.dart';
 
 class BottomChatFieldWidget extends ConsumerStatefulWidget {
   const BottomChatFieldWidget({Key? key, required this.recieverUserId})
@@ -161,10 +163,15 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final messageReply=ref.watch(messageReplyProvider);
+    final isShowMessageReply=messageReply !=null;
+
     return Column(
       children: [
+        isShowMessageReply?const MessageReplayPreviewWidget(): const SizedBox(),
         Row(
           children: [
+
             Expanded(
               child: TextFormField(
                 focusNode: focusNode,
