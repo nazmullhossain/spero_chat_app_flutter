@@ -1,6 +1,3 @@
-
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -17,10 +14,10 @@ import '../controller/chats_controller.dart';
 import 'info_widget.dart';
 import 'my_message_card_widget.dart';
 
-
-class ChatListWidget extends ConsumerStatefulWidget  {
-  const ChatListWidget({Key? key, required this.reciverUserId}) : super(key: key);
-final String reciverUserId;
+class ChatListWidget extends ConsumerStatefulWidget {
+  const ChatListWidget({Key? key, required this.reciverUserId})
+      : super(key: key);
+  final String reciverUserId;
 
   @override
   ConsumerState<ChatListWidget> createState() => _ChatListWidgetState();
@@ -34,71 +31,69 @@ class _ChatListWidgetState extends ConsumerState<ChatListWidget> {
     super.dispose();
     messageController.dispose();
   }
-  
-  
-  void onMessageSwipe(
-      String message,
-      bool isMe,
-      MessageEnum messageEnum
 
-      ){
-    ref.read(messageReplyProvider.notifier)
+  void onMessageSwipe(String message, bool isMe, MessageEnum messageEnum) {
+    ref
+        .read(messageReplyProvider.notifier)
         .update((state) => MessageReply(isMe, message, messageEnum));
   }
-  
+
   @override
-  Widget build(BuildContext context,) {
+  Widget build(
+    BuildContext context,
+  ) {
     return StreamBuilder<List<Message>>(
-        stream: ref.watch(chatControllerProvider).getChatStream(widget.reciverUserId),
-      builder: (context, snapshot) {
-          if(snapshot.connectionState==ConnectionState.waiting){
+        stream: ref
+            .watch(chatControllerProvider)
+            .getChatStream(widget.reciverUserId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return LoaderWidget();
           }
           SchedulerBinding.instance.addPostFrameCallback((_) {
-            messageController.jumpTo(
-              messageController.position.maxScrollExtent
-            );
+            messageController
+                .jumpTo(messageController.position.maxScrollExtent);
           });
-        return ListView.builder(
-          controller: messageController,
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            var messageData  = snapshot.data![index];
-            var timeSent= DateFormat.Hm().format(messageData.timeSent);
-            if (messageData.senderId==FirebaseAuth.instance.currentUser!.uid) {
-              return MyMessageCardWidget(
+          return ListView.builder(
+            controller: messageController,
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              var messageData = snapshot.data![index];
+              var timeSent = DateFormat.Hm().format(messageData.timeSent);
+              if (!messageData.isSeen &&
+                  messageData.recieverid ==
+                      FirebaseAuth.instance.currentUser!.uid) {
+                ref.read(chatControllerProvider).setChatMessageSeen(
+                    context, widget.reciverUserId, messageData.messageId);
+              }
+
+              if (messageData.senderId ==
+                  FirebaseAuth.instance.currentUser!.uid) {
+                return MyMessageCardWidget(
+                  message: messageData.text,
+                  date: timeSent,
+                  type: messageData.type,
+                  repliedText: messageData.repliedMessage,
+                  username: messageData.repliedTo,
+                  repliedMessageType: messageData.repliedMessageType,
+                  onLeftSwipe: () {
+                    onMessageSwipe(messageData.text, true, messageData.type);
+                
+                  }, isSeen: messageData.isSeen,
+                );
+              }
+              return SenderMessageCardWidget(
                 message: messageData.text,
                 date: timeSent,
-              type: messageData.type,
-            repliedText: messageData.repliedMessage,
+                type: messageData.type,
                 username: messageData.repliedTo,
                 repliedMessageType: messageData.repliedMessageType,
-
-onLeftSwipe: (){
-                  onMessageSwipe(messageData.text, true,
-                      messageData.type);
-},
-
+                onRightSwipe: () =>
+                    onMessageSwipe(messageData.text, false, messageData.type),
+                repliedText: messageData.repliedMessage,
               );
-
-
-            }
-            return SenderMessageCardWidget(
-              message: messageData.text,
-              date: timeSent,
-              type: messageData.type,
-              username: messageData.repliedTo,
-              repliedMessageType: messageData.repliedMessageType,
-              onRightSwipe: ()=>onMessageSwipe(
-                  messageData.text,
-                  false,
-                  messageData.type),
-              repliedText: messageData.repliedMessage,
-            );
-          },
-        );
-      }
-    );
+            },
+          );
+        });
   }
 }
-

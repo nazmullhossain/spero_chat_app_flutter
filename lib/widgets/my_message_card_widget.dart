@@ -13,11 +13,13 @@ class MyMessageCardWidget extends StatelessWidget {
   final String repliedText;
   final String username;
   final MessageEnum repliedMessageType;
+  final bool isSeen;
 
   const MyMessageCardWidget({
     Key? key,
     required this.message,
     required this.type,
+    required this.isSeen,
     required this.username,
     required this.date,
     required this.onLeftSwipe,
@@ -101,10 +103,12 @@ class MyMessageCardWidget extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(
-                        Icons.done_all,
+                       Icon(
+
+                        isSeen?
+                        Icons.done_all :Icons.done,
                         size: 20,
-                        color: Colors.white60,
+                        color:isSeen?Colors.blue: Colors.white60,
                       ),
                     ],
                   ),

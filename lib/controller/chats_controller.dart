@@ -87,5 +87,11 @@ ref.read(messageReplyProvider.notifier).update((state) => null);
 //
 
 
-
+void setChatMessageSeen(
+    BuildContext context,
+    String reciverUserId,
+    String messageId
+    ){
+    chatRepository.setChatMessageSeen(context, reciverUserId, messageId);
+}
 }

@@ -12,6 +12,7 @@ import 'package:whatapp_clone/models/user_models.dart';
 import 'package:whatapp_clone/provider/message_reply_provider.dart';
 import 'package:whatapp_clone/services/common_firebase_storage_services.dart';
 import 'package:whatapp_clone/utils/utils_utils.dart';
+import 'package:whatapp_clone/widgets/info_widget.dart';
 
 final chatRepositoryProvider = Provider(
   (ref) => ChatRepository(
@@ -329,5 +330,40 @@ class ChatRepository {
   //
   //
   //
+
+void setChatMessageSeen(
+    BuildContext context,
+    String reciverUserId,
+    String messageId
+    )async{
+    try{
+await firestore.collection('users')
+    .doc(auth.currentUser!.uid)
+    .collection('chats')
+    .doc(reciverUserId)
+    .collection('messages')
+    .doc(messageId).update({
+  'isSeen':true
+    });
+
+
+firestore.collection('users')
+    .doc(reciverUserId)
+    .collection('chats')
+    .doc(auth.currentUser!.uid)
+    .collection('messages')
+    .doc(messageId).update({
+  'isSeen':true
+});
+
+
+
+
+    }catch(e){
+      showSnackBar(context: context, content: e.toString());
+    }
+}
+
+
 
 }
