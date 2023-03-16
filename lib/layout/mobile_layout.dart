@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatapp_clone/controller/auth_controller.dart';
+import 'package:whatapp_clone/utils/utils_utils.dart';
 
+import '../pages/confirm_page.dart';
+import '../pages/group_page.dart';
 import '../pages/select_contact_pages.dart';
+import '../pages/status_pages.dart';
 import '../utils/color_utils.dart';
 import '../widgets/contact_list_widget.dart';
 
@@ -15,11 +21,13 @@ class MobileLayout extends ConsumerStatefulWidget {
 }
 
 class _MobileLayoutState extends ConsumerState<MobileLayout>
-with WidgetsBindingObserver{
+with WidgetsBindingObserver, TickerProviderStateMixin{
+  late TabController tabController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    tabController=TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addObserver(this);
   }
   @override
@@ -69,12 +77,18 @@ with WidgetsBindingObserver{
               icon: const Icon(Icons.search, color: Colors.grey),
               onPressed: () {},
             ),
-            IconButton(
-              icon: const Icon(Icons.more_vert, color: Colors.grey),
-              onPressed: () {},
-            ),
+          PopupMenuButton(
+             icon: Icon(Icons.more_vert,color: Colors.grey,),
+              itemBuilder: (context)=>[
+            PopupMenuItem(child: Text("Create Group")
+            ,onTap: ()=>
+           Future(()=>   Navigator.pushNamed(context, GroupPage.routeName))
+
+            )
+          ])
           ],
-          bottom: const TabBar(
+          bottom:  TabBar(
+            controller: tabController,
             indicatorColor: tabColor,
             indicatorWeight: 4,
             labelColor: tabColor,
@@ -95,10 +109,25 @@ with WidgetsBindingObserver{
             ],
           ),
         ),
-        body: const ContactsListWidget(),
+        body: TabBarView(
+          controller: tabController ,
+           children: const [
+             ContactsListWidget(),
+             StatusPages(),
+             Text("Calls")
+           ],
+        ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, SelectContactsScreen.routeName);
+          onPressed: () async{
+            if(tabController.index==0){
+              Navigator.pushNamed(context, SelectContactsScreen.routeName);
+            }else{
+              File?pickImage=await pickImageFromGallery(context);
+              if(pickImage!=null){
+                Navigator.pushNamed(context, ConfirmStatusPage.routeName,arguments: pickImage);
+              }
+            }
+
           },
           backgroundColor: tabColor,
           child: const Icon(

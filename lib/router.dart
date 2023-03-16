@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:whatapp_clone/pages/confirm_page.dart';
+import 'package:whatapp_clone/pages/group_page.dart';
 import 'package:whatapp_clone/pages/login_pages.dart';
 import 'package:whatapp_clone/pages/mobile_chat_page.dart';
 import 'package:whatapp_clone/pages/otp_pages.dart';
@@ -33,6 +37,31 @@ final uid=arguments['uid'];
       return MaterialPageRoute(
         builder: (context) => const SelectContactsScreen(),
       );
+
+
+    case ConfirmStatusPage.routeName:
+      final file=settings.arguments as File;
+      return MaterialPageRoute(
+
+        builder: (context) =>  ConfirmStatusPage(
+         file: file,
+        ),
+      );
+
+
+
+    case GroupPage.routeName:
+
+      return MaterialPageRoute(
+
+        builder: (context) =>  GroupPage(
+
+        ),
+      );
+
+
+
+
 
     case UserInformationPage.routeName:
       // final verificationId =settings.arguments as String;

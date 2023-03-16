@@ -23,14 +23,17 @@ class SelectContactRepository {
 
   Future<List<Contact>> getContacts() async {
     List<Contact> contacts = [];
+
     try {
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
     } catch (e) {
       debugPrint(e.toString());
+
     }
     return contacts;
+
   }
 
   void selectContact(Contact selectedContact, BuildContext context) async {
