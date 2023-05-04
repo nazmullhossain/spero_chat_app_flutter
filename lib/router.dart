@@ -23,13 +23,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
 
     case MobileChatPage.routeName:
-final arguments=settings.arguments as Map<String,dynamic>;
-final name=arguments['name'];
-final uid=arguments['uid'];
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
+      final uid = arguments['uid'];
+      final isGroupChat = arguments['isGroupChat'];
+      final profilePic = arguments['profilePic'];
       return MaterialPageRoute(
         builder: (context) => MobileChatPage(
           name: name,
           uid: uid,
+          isGroupChat: isGroupChat,
+          profilePic: profilePic,
         ),
       );
 
@@ -38,30 +42,18 @@ final uid=arguments['uid'];
         builder: (context) => const SelectContactsScreen(),
       );
 
-
     case ConfirmStatusPage.routeName:
-      final file=settings.arguments as File;
+      final file = settings.arguments as File;
       return MaterialPageRoute(
-
-        builder: (context) =>  ConfirmStatusPage(
-         file: file,
+        builder: (context) => ConfirmStatusPage(
+          file: file,
         ),
       );
-
-
 
     case GroupPage.routeName:
-
       return MaterialPageRoute(
-
-        builder: (context) =>  GroupPage(
-
-        ),
+        builder: (context) => GroupPage(),
       );
-
-
-
-
 
     case UserInformationPage.routeName:
       // final verificationId =settings.arguments as String;

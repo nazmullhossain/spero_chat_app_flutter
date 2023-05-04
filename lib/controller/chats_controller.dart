@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatapp_clone/enums/message_enum.dart';
+import 'package:whatapp_clone/models/group_model.dart';
 import 'package:whatapp_clone/provider/message_reply_provider.dart';
 
 import '../models/chat_contact_models.dart';
@@ -29,7 +30,13 @@ class ChatController {
   Stream<List<ChatContact>>chatContacts(){
     return chatRepository.getChatContacts();
   }
+  Stream<List<GroupModel>>chatGroup(){
+    return chatRepository.getChatGroups();
+  }
 
+  Stream<List<Message>>groupChatStrem(String groupId){
+    return chatRepository.getGroupStream(groupId);
+  }
 
   Stream<List<Message>>getChatStream(String recevierUserId){
     return chatRepository.getChatStream(recevierUserId);
@@ -39,12 +46,14 @@ class ChatController {
     BuildContext context,
     String text,
     String recieverUserId,
+      bool isGroupChat,
   ) {
     final messageReply=ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData((value) =>
         chatRepository.sendTextMessage(
             context: context,
             text: text,
+            isGroupChat: isGroupChat,
             recieverUserId: recieverUserId,
             messageReply:  messageReply,
             senderUser: value!));
@@ -58,7 +67,8 @@ class ChatController {
       BuildContext context,
       File file,
       String reciverUserId,
-      MessageEnum messageEnum
+      MessageEnum messageEnum,
+      bool isGroupChat,
       ){
     final messageReply=ref.read(messageReplyProvider);
 ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessage(
@@ -68,6 +78,7 @@ ref.read(userDataAuthProvider).whenData((value) => chatRepository.sendFileMessag
     reciverUserId: reciverUserId,
     senderUserData: value!,
     ref: ref,
+    isGroupchat: isGroupChat,
     messageEnum: messageEnum));
 ref.read(messageReplyProvider.notifier).update((state) => null);
   }
@@ -84,7 +95,7 @@ ref.read(messageReplyProvider.notifier).update((state) => null);
 //         recieverUserId: recieverUserId,
 //         senderUser: value!));
 // }
-//
+
 
 
 void setChatMessageSeen(

@@ -12,7 +12,6 @@ import '../pages/status_pages.dart';
 import '../utils/color_utils.dart';
 import '../widgets/contact_list_widget.dart';
 
-
 class MobileLayout extends ConsumerStatefulWidget {
   const MobileLayout({Key? key}) : super(key: key);
 
@@ -21,40 +20,40 @@ class MobileLayout extends ConsumerStatefulWidget {
 }
 
 class _MobileLayoutState extends ConsumerState<MobileLayout>
-with WidgetsBindingObserver, TickerProviderStateMixin{
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   late TabController tabController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController=TabController(length: 3, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addObserver(this);
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
-  
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
-    switch(state){
+    switch (state) {
       case AppLifecycleState.resumed:
         ref.read(authContorllerProvider).setUserState(true);
         break;
-
 
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
       case AppLifecycleState.paused:
         ref.read(authContorllerProvider).setUserState(false);
         break;
-
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -77,26 +76,28 @@ with WidgetsBindingObserver, TickerProviderStateMixin{
               icon: const Icon(Icons.search, color: Colors.grey),
               onPressed: () {},
             ),
-          PopupMenuButton(
-             icon: Icon(Icons.more_vert,color: Colors.grey,),
-              itemBuilder: (context)=>[
-            PopupMenuItem(child: Text("Create Group")
-            ,onTap: ()=>
-           Future(()=>   Navigator.pushNamed(context, GroupPage.routeName))
-
-            )
-          ])
+            PopupMenuButton(
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.grey,
+                ),
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                          child: Text("Create Group"),
+                          onTap: () => Future(() => Navigator.pushNamed(
+                              context, GroupPage.routeName)))
+                    ])
           ],
-          bottom:  TabBar(
+          bottom: TabBar(
             controller: tabController,
             indicatorColor: tabColor,
             indicatorWeight: 4,
             labelColor: tabColor,
             unselectedLabelColor: Colors.grey,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            tabs: [
+            tabs:const [
               Tab(
                 text: 'CHATS',
               ),
@@ -110,24 +111,20 @@ with WidgetsBindingObserver, TickerProviderStateMixin{
           ),
         ),
         body: TabBarView(
-          controller: tabController ,
-           children: const [
-             ContactsListWidget(),
-             StatusPages(),
-             Text("Calls")
-           ],
+          controller: tabController,
+          children: const [ContactsListWidget(), StatusPages(), Text("Calls")],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async{
-            if(tabController.index==0){
+          onPressed: () async {
+            if (tabController.index == 0) {
               Navigator.pushNamed(context, SelectContactsScreen.routeName);
-            }else{
-              File?pickImage=await pickImageFromGallery(context);
-              if(pickImage!=null){
-                Navigator.pushNamed(context, ConfirmStatusPage.routeName,arguments: pickImage);
+            } else {
+              File? pickImage = await pickImageFromGallery(context);
+              if (pickImage != null) {
+                Navigator.pushNamed(context, ConfirmStatusPage.routeName,
+                    arguments: pickImage);
               }
             }
-
           },
           backgroundColor: tabColor,
           child: const Icon(

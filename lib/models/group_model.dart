@@ -3,6 +3,7 @@ class GroupModel{
   final String name;
   final String groupId;
   final String lastMessage;
+  final DateTime timeSent;
 
 final String groupPic;
   final List<String>membersUid;
@@ -16,6 +17,7 @@ final String groupPic;
     required this.lastMessage,
     required this.groupPic,
     required this.membersUid,
+    required this.timeSent
 
 
 });
@@ -26,7 +28,7 @@ final String groupPic;
      name : map['name'] ?? '',
      groupId : map['groupId'] ?? '',
      lastMessage : map['lastMessage']?? '',
-
+     timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent']),
      groupPic : map['groupPic']?? '',
      membersUid : List<String>.from(map['membersUid'])
  );
@@ -38,7 +40,7 @@ final String groupPic;
         'name': name,
         'groupId': groupId,
         'lastMessage': lastMessage,
-
+    'timeSent': timeSent.millisecondsSinceEpoch,
         'groupPic': groupPic,
         'membersUid': membersUid,
       };

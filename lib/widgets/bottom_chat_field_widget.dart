@@ -17,9 +17,12 @@ import '../utils/utils_utils.dart';
 import 'message_replay_preview_widget.dart';
 
 class BottomChatFieldWidget extends ConsumerStatefulWidget {
-  const BottomChatFieldWidget({Key? key, required this.recieverUserId})
+  const BottomChatFieldWidget({Key? key,
+    required this.isGroupChat
+    ,required this.recieverUserId})
       : super(key: key);
   final String recieverUserId;
+  final bool isGroupChat;
   @override
   ConsumerState<BottomChatFieldWidget> createState() =>
       _BottomChatFieldWidgetState();
@@ -65,6 +68,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
             context,
             _messageController.text.trim(),
             widget.recieverUserId,
+        widget.isGroupChat
           );
       setState(() {
         _messageController.text = '';
@@ -96,7 +100,7 @@ class _BottomChatFieldWidgetState extends ConsumerState<BottomChatFieldWidget> {
   ) {
     ref
         .read(chatControllerProvider)
-        .sendFileMessage(context, file, widget.recieverUserId, messageEnum);
+        .sendFileMessage(context, file, widget.recieverUserId, messageEnum,  widget.isGroupChat,);
   }
 
   void selectImage() async {
