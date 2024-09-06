@@ -21,11 +21,15 @@ class ContactsListWidget extends ConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            Text("hellow"),
             StreamBuilder<List<GroupModel>>(
               stream: ref.watch(chatControllerProvider).chatGroup(),
               builder: (context, snapshot) {
                 if(snapshot.connectionState==ConnectionState.waiting){
                   return LoaderWidget();
+                }
+                if(snapshot.data!.isEmpty){
+                  return Text("null");
                 }
                 return ListView.builder(
                   shrinkWrap: true,

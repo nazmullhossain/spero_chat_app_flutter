@@ -80,11 +80,13 @@ class _ChatListWidgetState extends ConsumerState<ChatListWidget> {
                   type: messageData.type,
                   repliedText: messageData.repliedMessage,
                   username: messageData.repliedTo,
-                  repliedMessageType: messageData.repliedMessageType,
-                  onLeftSwipe: () {
-                    onMessageSwipe(messageData.text, true, messageData.type);
-                
-                  }, isSeen: messageData.isSeen,
+                  repliedMessageType: messageData.repliedMessageType, isSeen:  messageData.isSeen, onLeftSwipe: (DragUpdateDetails details) {
+                  onMessageSwipe(messageData.text, true, messageData.type);
+                },
+                  // onLeftSwipe: () {
+                  //   onMessageSwipe(messageData.text, true, messageData.type);
+                  //
+                  // }, isSeen: messageData.isSeen,
                 );
               }
               return SenderMessageCardWidget(
@@ -93,7 +95,8 @@ class _ChatListWidgetState extends ConsumerState<ChatListWidget> {
                 type: messageData.type,
                 username: messageData.repliedTo,
                 repliedMessageType: messageData.repliedMessageType,
-                onRightSwipe: () =>
+
+                onRightSwipe: (DragUpdateDetails details) =>
                     onMessageSwipe(messageData.text, false, messageData.type),
                 repliedText: messageData.repliedMessage,
               );

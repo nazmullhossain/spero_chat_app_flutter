@@ -14,51 +14,53 @@ void navigateToLoginScreen(BuildContext context){
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Text(
-              "Welcome to WhatsApp",
-              style: TextStyle(
-                fontSize: 33,
-                fontWeight: FontWeight.w600,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: size.height / 9,
-            ),
-            Image.asset(
-              "assets/images/bg.png",
-              height: 340,
-              width: 340,
-              color: tabColor,
-            ),
-            SizedBox(
-              height: size.height / 9,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-
-                "Read our Privacy policy,Tap Agree and continue to \n accepte the terms of siervices",
+              const Text(
+                "Welcome to WhatsApp",
                 style: TextStyle(
-                  color: Colors.grey,
+                  fontSize: 33,
+                  fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
               ),
-            ),
-            const SizedBox(height: 10,),
-
-         SizedBox(
-             width: size.width*0.75,
-             child: CustomButtonWidget(text: "AGREE AND CONTINUE", onPress: (){
-               navigateToLoginScreen(context);
-             }))
-          ],
+              SizedBox(
+                height: size.height / 9,
+              ),
+              Image.asset(
+                "assets/images/bg.png",
+                height: 340,
+                width: 340,
+                color: tabColor,
+              ),
+              SizedBox(
+                height: size.height / 9,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+          
+                  "Read our Privacy policy,Tap Agree and continue to \n accepte the terms of siervices",
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 10,),
+          
+           SizedBox(
+               width: size.width*0.75,
+               child: CustomButtonWidget(text: "AGREE AND CONTINUE", onPress: (){
+                 navigateToLoginScreen(context);
+               }))
+            ],
+          ),
         ),
       ),
     );

@@ -23,7 +23,7 @@ class CallPage extends ConsumerStatefulWidget {
 
 class _CallPageState extends ConsumerState<CallPage> {
   AgoraClient? client;
-  String baseUrl="http://localhost:8080";
+  String baseUrl="https://whatsapp-clone-rrr.herokuapp.com";
 @override
   void initState() {
     // TODO: implement initState

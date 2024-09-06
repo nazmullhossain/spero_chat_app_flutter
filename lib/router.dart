@@ -32,8 +32,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => MobileChatPage(
           name: name,
           uid: uid,
-          isGroupChat: isGroupChat,
-          profilePic: profilePic,
+          isGroupChat: false,
+          profilePic: "",
         ),
       );
 

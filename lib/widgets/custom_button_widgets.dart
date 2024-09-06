@@ -9,7 +9,7 @@ final VoidCallback onPress;
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: tabColor,
+          backgroundColor: tabColor,
           minimumSize: Size(double.infinity, 50)
         ) ,
         onPressed: onPress, child: Text(text,

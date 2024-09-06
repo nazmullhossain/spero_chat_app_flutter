@@ -19,7 +19,7 @@ class SenderMessageCardWidget extends StatelessWidget {
   final String message;
   final String date;
   final MessageEnum type;
-  final VoidCallback onRightSwipe;
+  final GestureDragUpdateCallback onRightSwipe;
   final String repliedText;
   final String username;
   final MessageEnum repliedMessageType;
